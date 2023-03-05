@@ -1,5 +1,6 @@
 import { Message } from 'kafkajs';
 import { faker } from '@faker-js/faker';
+import { randomUUID } from 'crypto';
 
 export default function createKafkaMessages(amount = 1): Message[] {
   const users: Message[] = [];
@@ -10,7 +11,7 @@ export default function createKafkaMessages(amount = 1): Message[] {
       email: faker.internet.email(),
       phone: faker.phone.number(),
     };
-    users.push({ value: JSON.stringify(user) });
+    users.push({ value: JSON.stringify(user), key: randomUUID() });
   }
 
   return users;
