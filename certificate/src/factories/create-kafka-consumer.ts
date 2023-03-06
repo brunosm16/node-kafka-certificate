@@ -1,12 +1,10 @@
 import env from '@/config/env';
 import { Consumer, Kafka } from 'kafkajs';
+import createKafkaClient from './create-kafka-client';
 
 export default function (): Consumer {
-  const { kafkaBrokers, clientId, consumerGroup: groupId } = env;
-
-  const brokers = kafkaBrokers.split(',') ?? [];
-
-  const kafka = new Kafka({ clientId, brokers });
+  const { consumerGroup: groupId } = env;
+  const kafka = createKafkaClient();
 
   const consumer = kafka.consumer({ groupId });
 
